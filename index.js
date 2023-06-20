@@ -6,10 +6,16 @@ const gifsOnlyOption = document.getElementById("gifs-only-option");
 const memeModalInner = document.getElementById("meme-modal-inner");
 const memeModal = document.getElementById("meme-modal");
 const memeModalCloseBtn = document.getElementById("meme-modal-close-btn");
+const mainEl = document.querySelector("main");
+const headerEl = document.querySelector("header");
+let isImageBtn = false;
 
 emotionRadios.addEventListener("change", highlightCheckedOption);
 
 memeModalCloseBtn.addEventListener("click", closeModal);
+
+mainEl.addEventListener("click", checkImageBtnState);
+headerEl.addEventListener("click", checkImageBtnState);
 
 getImageBtn.addEventListener("click", renderCat);
 
@@ -25,6 +31,13 @@ function closeModal() {
   memeModal.style.display = "none";
 }
 
+function checkImageBtnState() {
+  if (isImageBtn) {
+    closeModal();
+  }
+  isImageBtn = false;
+}
+
 function renderCat() {
   const catObject = getSingleCatObject();
   memeModalInner.innerHTML = `
@@ -35,6 +48,9 @@ function renderCat() {
         >
         `;
   memeModal.style.display = "flex";
+  setTimeout(function () {
+    isImageBtn = true;
+  }, 1000);
 }
 
 function getSingleCatObject() {
